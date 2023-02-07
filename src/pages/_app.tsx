@@ -1,8 +1,14 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { createGlobalStyle } from 'styled-components'
+import reset from 'styled-reset'
 import { Provider } from 'react-redux'
 import store from '../store'
-import { CssBaseline } from '@mui/material'
+import Layout from 'components/layout'
+
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+`
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
@@ -17,9 +23,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <meta property="og:locale" content="ja_JP" />
         <meta property="og:type" content="website" />
       </Head>
-      <CssBaseline />
+      <GlobalStyle />
       <Provider store={store}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </Provider>
     </>
   )

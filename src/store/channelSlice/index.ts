@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, Slice } from '@reduxjs/toolkit'
 
-const channelSlice = createSlice({
+export const channelSlice: Slice = createSlice({
   name: 'channel',
   initialState: {
     snippet: [],
@@ -11,18 +11,21 @@ const channelSlice = createSlice({
   },
   reducers: {
     setChannel: (state, action) => {
-      state.snippet = action.payload.snippet;
-      state.brandingSettings = action.payload.brandingSettings;
-      state.statistics = action.payload.statistics;
+      state.snippet = action.payload.snippet
+      state.brandingSettings = action.payload.brandingSettings
+      state.statistics = action.payload.statistics
     },
     setMovieList: (state, action) => {
-      state.movieList = action.payload;
+      state.movieList = action.payload
     },
     setSearchValue: (state, action) => {
-      state.searchValue = action.payload;
+      state.searchValue = action.payload
     }
   }
 })
 
-export const { setChannel, setMovieList, setSearchValue } = channelSlice.actions;
-export default channelSlice.reducer;
+export const { setChannel, setMovieList, setSearchValue } = channelSlice.actions
+
+export const selectChannel = (state: any) => state.channel
+
+export default channelSlice.reducer
