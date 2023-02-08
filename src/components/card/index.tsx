@@ -9,6 +9,8 @@ const StyledDiv = styled.div`
 const StyledSpan = styled.span`
   display: block;
   white-space: pre-wrap;
+  letter-spacing: 1px;
+  line-height: 20px;
   margin: 12px 0;
   padding: 12px;
   background-color: rgba(0, 0, 0, 0.05);

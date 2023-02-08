@@ -8,7 +8,15 @@ const StyledDiv = styled.div`
 `
 
 const StyledInput = styled.input`
-  font-size: 25px;
+  width: 250px;
+  height: 20px;
+  font-size: 16px;
+  padding: 5px 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  &::placeholder {
+    font-size: 16px;
+  }
 `
 
 const ShopSearch = () => {

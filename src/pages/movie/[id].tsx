@@ -6,20 +6,21 @@ import type {
   GetStaticPropsContext
 } from 'next'
 import Head from 'next/head'
-import getMovie from 'pages/api/movie'
+import getMovie from 'services/movie/get-movie'
 import MovieTitle from 'components/movietitle'
 import MoviePlayer from 'components/movieplayer'
 import Card from 'components/card'
+import BackToTop from 'components/scrolltop'
 import type { Movie } from 'types'
 
-//API
-//リクエスト数で課金されるのが怖いため、5件取得版を使用
-// import getMovieList from './api/movieList'
-import getMovieList5 from '../api/movieList5'
+// API
+// リクエスト数で課金されるのが怖いため、5件取得版を使用
+import getMovieList from 'services/movie/get-movielist'
+import getMovieList5 from 'services/movie/get-movielist5'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   //動画内容取得
-  const movieList = await getMovieList5()
+  const movieList = await getMovieList()
   const paths = movieList.map((movie: Movie) => `/movie/${movie.id}`)
 
   return {
@@ -53,24 +54,26 @@ const MoviePage: NextPage<MoviePageProps> = (props) => {
   const { movie } = props
   const url = `https://www.youtube.com/watch?v=${movie.id}`
   return (
-    <>
-      <Head>
-        <title>SUSURU道</title>
-      </Head>
-      <MovieTitle
-        title={movie.snippet.title}
-        date={movie.snippet.publishedAt}
-      />
-      <MoviePlayer id={movie.id}/>
-      <Card
-        title="動画URL"
-        text={url}
-      />
-      <Card
-        title="動画概要"
-        text={movie.snippet.description}
-      />
-    </>
+    <BackToTop>
+      <>
+        <Head>
+          <title>SUSURU道</title>
+        </Head>
+        <MovieTitle
+          title={movie.snippet.title}
+          date={movie.snippet.publishedAt}
+        />
+        <MoviePlayer id={movie.id}/>
+        <Card
+          title="動画URL"
+          text={url}
+        />
+        <Card
+          title="動画概要"
+          text={movie.snippet.description}
+        />
+      </>
+    </BackToTop>
   )
 }
 

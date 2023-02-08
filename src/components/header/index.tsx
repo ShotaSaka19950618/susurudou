@@ -1,3 +1,4 @@
+import { Toolbar } from '@mui/material'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
@@ -46,6 +47,7 @@ const Header = () => {
   const clickNav = () => router.push('/')
 
   return (
+    <>
     <HeaderRoot>
       <Nav onClick={clickNav}>
         <NavTitle>
@@ -56,6 +58,8 @@ const Header = () => {
         </NavText>
       </Nav>
     </HeaderRoot>
+    <Toolbar id="back-to-top-anchor" />
+    </>
   )
 }
 

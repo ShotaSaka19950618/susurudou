@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
@@ -45,46 +46,58 @@ const Date = styled.div`
   text-align: right;
   color: #333;
 `
+const NoShop = styled.div`
+  font-size: 24px;
+  text-align: center;
+`
 
 const ShopList = () => {
   const channel = useSelector(selectChannel)
   const movieList = channel.movieList
   const searchValue = channel.searchValue
 
+  const filteredMovieList = movieList.filter((movie: Movie) => {
+    const nameMatch = movie.shopName.indexOf(searchValue) !== -1
+    const adressMatch = movie.shopAddress2.indexOf(searchValue) !== -1
+    return nameMatch || adressMatch
+  })
+
   return (
-    <List>
-      {movieList
-        .filter((movie: Movie) => {
-          const nameMatch = movie.shopName.indexOf(searchValue) !== -1;
-          const adressMatch = movie.shopAddress2.indexOf(searchValue) !== -1;
-          return nameMatch || adressMatch;
-        })
-        .map((movie: Movie) => {
-          return (
-            <Link href={`/movie/${movie.id}`} key={movie.id}>
-              <Shop>
-                <ImageSpace>
-                <Image
-                    src={movie.thumbnails.high.url}
-                    alt={movie.shopName}
-                    fill
-                    priority={true}
-                    sizes="(max-width: 768px) 100vw,
-                      (max-width: 1200px) 50vw,
-                      33vw"
-                  />
-                </ImageSpace>
-                <TextTitle>店舗名</TextTitle>
-                <Text>{movie.shopName}</Text>
-                <TextTitle>住所</TextTitle>
-                <Text>{movie.shopAddress2}</Text>
-                <Date>投稿日: {movie.date.substring(0, 10).replaceAll('-','/')}</Date>
-              </Shop>
-            </Link>
-          )
-        }
-      )}
-    </List>
+    <>
+      {filteredMovieList.length === 0 &&
+        <NoShop>
+          <span>該当店舗無し</span>
+        </NoShop>
+      }
+      <List>
+        {filteredMovieList
+          .map((movie: Movie) => {
+            return (
+              <Link href={`/movie/${movie.id}`} key={movie.id}>
+                <Shop>
+                  <ImageSpace>
+                  <Image
+                      src={movie.thumbnails.high.url}
+                      alt={movie.shopName}
+                      fill
+                      priority={true}
+                      sizes="(max-width: 768px) 100vw,
+                        (max-width: 1200px) 50vw,
+                        33vw"
+                    />
+                  </ImageSpace>
+                  <TextTitle>店舗名</TextTitle>
+                  <Text>{movie.shopName}</Text>
+                  <TextTitle>住所</TextTitle>
+                  <Text>{movie.shopAddress2}</Text>
+                  <Date>投稿日: {movie.date.substring(0, 10).replaceAll('-','/')}</Date>
+                </Shop>
+              </Link>
+            )
+          }
+        )}
+      </List>
+    </>
   )
 }
 
