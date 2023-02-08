@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps = async () => {
   // チャンネル情報取得
   const channelInfo = await getChannel();
   // 動画内容取得
-  const movieList = await getMovieList();
+  const movieList = await getMovieList5();
   return {
     props: {
       channelInfo,

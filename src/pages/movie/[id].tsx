@@ -20,7 +20,7 @@ import getMovieList5 from 'services/movie/get-movielist5'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   //動画内容取得
-  const movieList = await getMovieList()
+  const movieList = await getMovieList5()
   const paths = movieList.map((movie: Movie) => `/movie/${movie.id}`)
 
   return {
